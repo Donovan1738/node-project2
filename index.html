@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Instruments</h1>
+            <a href="#" id="add-link">+</a>
+        </header>
+
+        <div class="columns two-columns">
+            <div id="recipe-list" class="columns"></div>
+            <div id="recipe-details-column">
+            <h3>Details</h3>
+            <div id="recipe-details"></div>
+        </div>
+    </div>
+
+        <div id="add-edit-recipe-container" class="dialog transparent">
+            <span class="close">&times;</span>
+
+            <h3 id="add-edit-title">Instrument</h3>
+            <form id="add-edit-instrument-form" method="post">
+                <input type="hidden" name="_id" value="-1" />
+                <p>
+                    <label for="name">Instrument Name:</label>
+                    <input type="text" id="name" name="name" required />
+                </p> 
+                <p>
+                    <label for="desciption">Desciption:</label>
+                    <input type="text" id="desciption" name="desctiption" required />
+                </p> 
+                <p>
+                    <label for="img">Img:</label>
+                    <input type="file" id="img" name="img"/>
+                </p> 
+                <p id="parts-p">
+                    <label class="inline">Parts:</label>
+                    <a href="#" id="add-part">Add Part</a>
+                    <section id="part-boxes"></section>
+                </p> 
+                <p>
+                    <button type="submit">Submit</button>
+                </p>
+            </form>
+
+        </div>
+    </body>
+</html> 
