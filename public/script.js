@@ -1,6 +1,6 @@
 const getInstruments = async () => {
     try {
-        return (await fetch("https://node-project2-tmjf.onrender.com/api/recipes")).json();
+        return (await fetch("api/recipes")).json();
     } catch(error) {
         console.log(error);
     }
@@ -25,7 +25,7 @@ const showInstruments = async () => {
 
         const img = document.createElement("img");
         section.append(img);
-        img.src = "https://node-project2-tmjf.onrender.com/" + instrument.img;
+        img.src = "https://node-project2-zhjx.onrender.com/" + instrument.img;
         
 
         a.onclick = (e) => {
