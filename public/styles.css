@@ -1,4 +1,5 @@
 /*Structure*/
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: gray;
@@ -7,6 +8,7 @@ body {
 #recipe-list {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 #recipe-details {
@@ -14,6 +16,7 @@ body {
     margin: 10px;
     padding: auto;
     background-color: seagreen;
+    text-align: center;
 }
 
 .recipe {
@@ -21,6 +24,9 @@ body {
     margin: 10px;
     border-radius: 5px;
     background-color: seagreen;
+    width: 285px;
+    height: 250px;
+    text-align: center;
 }
 
 .recipe img {
@@ -46,6 +52,14 @@ img {
 
 #delete-link {
     float: right;
+}
+
+#add-edit-recipe-container {
+    max-width: 95%;
+}
+
+.transparent {
+    display:none;
 }
 
 /*form*/ 
@@ -96,12 +110,15 @@ label {
     text-decoration: none;
     cursor: pointer;
 }
+
 /*Typography*/
-h1 {
-    color: black;
+
+h2 {
+    text-align: center;
 }
 
 a {
     text-decoration: none;
     color: black;
 }
+

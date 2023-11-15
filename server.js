@@ -7,6 +7,7 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 
+const upload = multer({ dest: __dirname + "/public/images" });
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
@@ -109,19 +110,19 @@ app.get("/api/recipes", (req, res) => {
     res.send(instruments);
 });
 
-app.post("/api/recipes", (req,res) => {
-    const result = validateInstrument(req,body);
-
+app.post("/api/recipes", upload.single("img"), (req,res) => {
+    const result = validateInstrument(req.body);
     if(result.error) {
         res.status(400).send(result.error.details[0].message);
         return;
     }
 
-    console.log(req.body.parts);
     const instrument = {
-        id: instruments.length + 1,
+        _id: instruments.length + 1,
         name: req.body.name,
         description: req.body.description,
+        material: req.body.material,
+        parts: req.body.parts.split(","),
     };
 
     if (req.body.parts) {
@@ -134,10 +135,11 @@ app.post("/api/recipes", (req,res) => {
 
 const validateInstrument = (instrument) => {
     const schema = Joi.object({
-        id: Joi.allow(""),
+        _id: Joi.allow(""),
         name: Joi.string().min(3).required(),
         description: Joi.string().min(3).required(),
-        parts: Joi.allow(),
+        material: Joi.string().min(3).required(),
+        parts: Joi.allow(""),
     });
 
     return schema.validate(instrument);

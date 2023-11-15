@@ -1,6 +1,6 @@
 const getInstruments = async () => {
     try {
-        return (await fetch("https://node-project2-c7wu.onrender.com/api/recipes")).json();
+        return (await fetch("api/recipes")).json();
     } catch(error) {
         console.log(error);
     }
@@ -25,7 +25,7 @@ const showInstruments = async () => {
 
         const img = document.createElement("img");
         section.append(img);
-        img.src = "https://node-project2-c7wu.onrender.com/" + instrument.img;
+        img.src = instrument.img;
         
 
         a.onclick = (e) => {
@@ -68,7 +68,7 @@ const displayDetails = (instrument) => {
 
     const p2 = document.createElement("p");
     instrumentDetails.append(p2);
-    p2.innerHTML = "<b>Instrument Parts:</b> " +instrument.parts;
+    p2.innerHTML = "<b>Instrument Parts:</b> " + instrument.parts;
 
     eLink.onclick = (e) => {
         e.preventDefault();
@@ -92,47 +92,49 @@ const addEditInstrument = async (e) => {
     const formData = new FormData(form);
     formData.append("parts", getParts());
     console.log(...formData);
+
     let response;
 
-    const instrumentDetails = document.getElementById("recipe-details");
-    instrumentDetails.innerHTML = "";
-    instrumentDetails.append(...formData)
+    // const instrumentDetails = document.getElementById("recipe-details");
+    // instrumentDetails.innerHTML = "";
+    // instrumentDetails.append(...formData)
 
     // console.log(form.instrumentId.value > 0 && form.instrumentId.value.length);
-    // if(form._Id.value == -1) {
-    //     formData.delete("instrumentId");
-    //     // formData.delete("img");
-    //     // console.log(...formData);
-    //     response = await fetch("/api/recipes", {
-    //         method: "POST",
-    //         body: formData,
-    //     });
-    // } else {
-    //     console.log("editting");
-    //     response = await fetch(`/api/recipes/${form.instrumentId.value}` , {
-    //         method: "PUT",
-    //         body: formData,
-    //     });
-    // }
+    if(form._id.value == -1) {
+        formData.delete("_id");
+        formData.delete("img");
+        console.log(...formData);
 
-    // if(response.status != 200) {
-    //     console.log("Error contacting server");
-    //     return;
-    // }
+        response = await fetch("/api/recipes", {
+            method: "POST",
+            body: formData,
+        });
+    } else {
+        // console.log("editting");
+        response = await fetch(`/api/recipes/${form._id.value}` , {
+            method: "PUT",
+            body: formData,
+        });
+    }
 
-    // document.querySelector(".dialog").classList.add("transparent");
-    // resetForm();
-    // showInstruments();
-};
-
-const getInstrument = async(instrumentId) => {
-    let response = await fetch( `/api/recipes/${instrumentId}`);
-    if (response.status != 200) {
-        console.log("Error retrieving recipe");
+    if(response.status != 200) {
+        console.log("Error contacting server");
         return;
     }
-    return await response.json();
-}
+
+    document.querySelector(".dialog").classList.add("transparent");
+    resetForm();
+    showInstruments();
+};
+
+// const getInstrument = async(instrumentId) => {
+//     let response = await fetch( `/api/recipes/${instrumentId}`);
+//     if (response.status != 200) {
+//         console.log("Error retrieving recipe");
+//         return;
+//     }
+//     return await response.json();
+// }
 
 const getParts = () => {
     const inputs = document.querySelectorAll("#part-boxes input");
@@ -154,7 +156,7 @@ const resetForm = () => {
 const showHideAdd = (e) => {
     e.preventDefault();
     document.querySelector(".dialog").classList.remove("transparent");
-    document.getElementById("add-edit-title").innerHTML = "Add Instrument";
+    document.getElementById("add-edit-title").innerHTML = "Add A New Instrument";
     resetForm();
 };
 
